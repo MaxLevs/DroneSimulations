@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="DroneSimulations.MVVM.View.DisplayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DroneSimulations.MVVM.View"
+             xmlns:viewmodels="clr-namespace:DroneSimulations.MVVM.ViewModel"
+             xmlns:converters="clr-namespace:DroneSimulations.MVVM.View.Converters"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="uc">
+
+    <!--ItemsSource="{Binding Items, ElementName=ListOfDrones}"-->
+    <UserControl.Resources>
+        <converters:SubstractValuesConverter x:Key="SubstractValuesConverter"/>
+
+        <Style TargetType="ContentPresenter" x:Key="DisplayItemStyle">
+            <Setter Property="Canvas.Left">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource SubstractValuesConverter}" Mode="TwoWay">
+                        <Binding Path="X"/>
+                        <Binding Path="Radius"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Canvas.Top">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource SubstractValuesConverter}" Mode="TwoWay">
+                        <Binding Path="Y"/>
+                        <Binding Path="Radius"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
+            <local:DroneView X="{Binding X}"
+                             Y="{Binding Y}"
+                             Radius="{Binding Radius}"
+                             Color="{Binding DisplayColor}">
+                <!--
+                <local:DisplayView.X>
+                    <MultiBinding>
+                        <Binding Path="X"/>
+                    </MultiBinding>
+                </local:DisplayView.X>
+                <local:DisplayView.Y>
+                    <MultiBinding>
+                        <Binding Path="Y"/>
+                    </MultiBinding>
+                </local:DisplayView.Y>
+                -->
+            </local:DroneView>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border BorderBrush="Black"
+                BorderThickness="1">
+            <ItemsControl Name="Display"
+                          DataContext="{Binding DataContext, ElementName=uc}"
+                          ItemsSource="{Binding Items, ElementName=uc}"
+                          ItemContainerStyle="{StaticResource DisplayItemStyle}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Background="#cccccc"
+                                SnapsToDevicePixels="True"
+                                ClipToBounds="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Border>
+    </Grid>
+</UserControl>

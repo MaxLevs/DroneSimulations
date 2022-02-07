@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="DroneSimulations.MVVM.View.DroneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DroneSimulations.MVVM.View"
+             xmlns:converters="clr-namespace:DroneSimulations.MVVM.View.Converters"
+             xmlns:viewmodels="clr-namespace:DroneSimulations.MVVM.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="30"
+             x:Name="uc">
+             
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:NumberToMultipliedNumberConverter x:Key="MultiplyConveter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
+                 Height="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
+                 StrokeThickness="1"
+                 Stroke="Black">
+            <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
+            </Ellipse.Fill>
+        </Ellipse>
+    </Grid>
+</UserControl>
