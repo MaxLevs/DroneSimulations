@@ -11,9 +11,10 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="uc">
 
-    <!--ItemsSource="{Binding Items, ElementName=ListOfDrones}"-->
     <UserControl.Resources>
         <converters:SubstractValuesConverter x:Key="SubstractValuesConverter"/>
+        <converters:NumberToMultipliedNumberConverter x:Key="NumberToMultipliedNumberConverter"/>
+        <converters:DivideValuesConverter x:Key="DivideValuesConverter"/>
 
         <Style TargetType="ContentPresenter" x:Key="DisplayItemStyle">
             <Setter Property="Canvas.Left">
@@ -34,42 +35,125 @@
             </Setter>
         </Style>
 
-        <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
-            <local:DroneView X="{Binding X}"
-                             Y="{Binding Y}"
-                             Radius="{Binding Radius}"
-                             Color="{Binding DisplayColor}">
-                <!--
-                <local:DisplayView.X>
-                    <MultiBinding>
-                        <Binding Path="X"/>
-                    </MultiBinding>
-                </local:DisplayView.X>
-                <local:DisplayView.Y>
-                    <MultiBinding>
-                        <Binding Path="Y"/>
-                    </MultiBinding>
-                </local:DisplayView.Y>
-                -->
-            </local:DroneView>
-        </DataTemplate>
+        <converters:NumberToStringConverter x:Key="NumberToStringConverter"/>
     </UserControl.Resources>
 
-    <Grid>
-        <Border BorderBrush="Black"
-                BorderThickness="1">
+    <Border BorderBrush="Black"
+            BorderThickness="1">
+        <Grid>
+            <Rectangle Fill="#cccccc"
+                       VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch"/>
             <ItemsControl Name="Display"
                           DataContext="{Binding DataContext, ElementName=uc}"
                           ItemsSource="{Binding Items, ElementName=uc}"
                           ItemContainerStyle="{StaticResource DisplayItemStyle}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="#cccccc"
+                        <Canvas Background="Transparent"
                                 SnapsToDevicePixels="True"
                                 ClipToBounds="True"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
+                        <local:DroneView X="{Binding X}" Y="{Binding Y}"
+                                         Radius="{Binding Radius}"
+                                         Color="{Binding DisplayColor}"
+                                         x:Name="drone_view">
+                            <local:DroneView.RenderTransform>
+                                <TransformGroup>
+                                <!--
+                                        X="{Binding XOrigin, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
+                                        Y="{Binding YOrigin, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToMultipliedNumberConverter}, ConverterParameter=-1}"
+                                -->
+                                    <!-- Вычисляемые формулы смещения координат объектов -->
+                                    <TranslateTransform>
+                                        <TranslateTransform.X>
+                                            <MultiBinding Converter="{StaticResource DivideValuesConverter}">
+                                                <Binding Path="ActualWidth"
+                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                         Converter="{StaticResource NumberToMultipliedNumberConverter}"
+                                                         ConverterParameter="0,5"/>
+                                                <!--<Binding Path="XOrigin" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                                <!--<Binding Path="Scale" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                            </MultiBinding>
+                                        </TranslateTransform.X>
+                                        <TranslateTransform.Y>
+                                            <MultiBinding Converter="{StaticResource DivideValuesConverter}">
+                                                <Binding Path="ActualHeight"
+                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                         Converter="{StaticResource NumberToMultipliedNumberConverter}"
+                                                         ConverterParameter="0,5"/>
+                                                <!--<Binding Path="YOrigin" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                                <!--<Binding Path="Scale" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                            </MultiBinding>
+                                        </TranslateTransform.Y>
+                                    </TranslateTransform>
+                                    <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
+                                                    ScaleY="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
+                                                    CenterX="{Binding Radius}"
+                                                    CenterY="{Binding Radius}"/>
+                                </TransformGroup>
+                            </local:DroneView.RenderTransform>
+                        </local:DroneView>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Border>
-    </Grid>
+
+            <Grid Width="200"
+                  Margin="0,0,10,10"
+                  VerticalAlignment="Bottom"
+                  HorizontalAlignment="Right"
+                  Background="Transparent">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Opacity" Value="0.3"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <GroupBox Header="Area Properties">
+                    <StackPanel>
+                        <DockPanel VerticalAlignment="Center">
+                            <Label Content="X:"
+                                   Width="55px"
+                                   Margin="0,0,5,0"/>
+                            <TextBox VerticalAlignment="Center"
+                                     TextWrapping="NoWrap"
+                                     InputScope="Number"
+                                     Text="{Binding XOrigin, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
+                                     x:Name="XOriginInput"/>
+                        </DockPanel>
+                        <DockPanel VerticalAlignment="Center"
+                                   Margin="0,5,0,0">
+                            <Label Content="Y:"
+                                   Width="55px"
+                                   Margin="0,0,5,0"/>
+                            <TextBox VerticalAlignment="Center"
+                                     TextWrapping="NoWrap"
+                                     InputScope="Number"
+                                     Text="{Binding YOrigin, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
+                                     x:Name="YOriginInput"/>
+                        </DockPanel>
+                        <DockPanel VerticalAlignment="Center"
+                                   Margin="0,5,0,0">
+                            <Label Content="Scale:"
+                                   Width="55px"
+                                   Margin="0,0,5,0"/>
+                            <TextBox VerticalAlignment="Center"
+                                     TextWrapping="NoWrap"
+                                     InputScope="Number"
+                                     Text="{Binding Scale, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
+                                     x:Name="ScaleInput"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>

@@ -124,6 +124,7 @@
             </StackPanel>
         </DataTemplate>
 
+        <converters:NumberToStringConverter x:Key="NumberToStringConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -155,6 +156,7 @@
                         </Grid.ColumnDefinitions>
 
                         <views:DisplayView Items="{Binding Drones}"
+                                           x:Name="Display"
                                            Margin="5"/>
 
                         <GridSplitter Grid.Column="1"
@@ -176,31 +178,6 @@
                                 <Label Content="Simulation Properties"
                                        HorizontalAlignment="Center"
                                        FontWeight="Medium"/>
-
-                                <GroupBox Header="Area Size"
-                                          Margin="5,0,5,5">
-                                    <StackPanel>
-                                        <DockPanel VerticalAlignment="Center">
-                                            <Label Content="X:"
-                                                   Width="30px"
-                                                   Margin="0,0,5,0"/>
-                                            <TextBox VerticalAlignment="Center"
-                                                     TextWrapping="NoWrap"
-                                                     InputScope="Number"
-                                                     Text="{Binding AreaX, Mode=TwoWay}"/>
-                                        </DockPanel>
-                                        <DockPanel VerticalAlignment="Center"
-                                                   Margin="0,5,0,0">
-                                            <Label Content="Y:"
-                                                   Width="30px"
-                                                   Margin="0,0,5,0"/>
-                                            <TextBox VerticalAlignment="Center"
-                                                     TextWrapping="NoWrap"
-                                                     InputScope="Number"
-                                                     Text="{Binding AreaY, Mode=TwoWay}"/>
-                                        </DockPanel>
-                                    </StackPanel>
-                                </GroupBox>
 
                                 <DockPanel LastChildFill="False">
                                     <Label Content="List of drones"

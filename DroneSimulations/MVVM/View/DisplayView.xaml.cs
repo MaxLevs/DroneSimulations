@@ -30,21 +30,42 @@ namespace DroneSimulations.MVVM.View
             set => SetValue(ItemsProperty, value);
         }
 
-        public static readonly DependencyProperty XOriginProperty = DependencyProperty.Register(nameof(XOrigin), typeof(double), typeof(DisplayView));
+        public static readonly DependencyProperty XOriginProperty = DependencyProperty.RegisterAttached(nameof(XOrigin), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
+        {
+            AffectsRender = true,
+            AffectsMeasure = true,
+            SubPropertiesDoNotAffectRender = false,
+            BindsTwoWayByDefault = true,
+            DefaultValue = 0.0
+        });
         public double XOrigin
         {
             get => (double)GetValue(XOriginProperty);
             set => SetValue(XOriginProperty, value);
         }
 
-        public static readonly DependencyProperty YOriginProperty = DependencyProperty.Register(nameof(YOrigin), typeof(double), typeof(DisplayView));
+        public static readonly DependencyProperty YOriginProperty = DependencyProperty.RegisterAttached(nameof(YOrigin), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
+        {
+            AffectsRender = true,
+            AffectsMeasure = true,
+            SubPropertiesDoNotAffectRender = false,
+            BindsTwoWayByDefault = true,
+            DefaultValue = 0.0
+        });
         public double YOrigin
         {
             get => (double)GetValue(YOriginProperty);
             set => SetValue(YOriginProperty, value);
         }
 
-        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(nameof(Scale), typeof(double), typeof(DisplayView));
+        public static readonly DependencyProperty ScaleProperty = DependencyProperty.RegisterAttached(nameof(Scale), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
+        {
+            AffectsRender = true,
+            AffectsMeasure = true,
+            SubPropertiesDoNotAffectRender = false,
+            BindsTwoWayByDefault = true,
+            DefaultValue = 1.0
+        });
         public double Scale
         {
             get => (double)GetValue(ScaleProperty);

@@ -11,7 +11,13 @@ namespace DroneSimulations.MVVM.View
     /// </summary>
     public partial class DroneView : UserControl
     {
-        public static readonly DependencyProperty XProperty = DependencyProperty.Register(nameof(X), typeof(double), typeof(DroneView));
+        public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached(nameof(X), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
+        {
+            AffectsMeasure = true,
+            AffectsRender = true,
+            SubPropertiesDoNotAffectRender = false,
+            DefaultValue = 0.0
+        });
         public double X
         {
             get => (double)GetValue(XProperty);
@@ -21,7 +27,13 @@ namespace DroneSimulations.MVVM.View
             }
         }
 
-        public static readonly DependencyProperty YProperty = DependencyProperty.Register(nameof(Y), typeof(double), typeof(DroneView));
+        public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached(nameof(Y), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
+        {
+            AffectsMeasure = true,
+            AffectsRender = true,
+            SubPropertiesDoNotAffectRender = false,
+            DefaultValue = 0.0
+        });
         public double Y
         {
             get => (double)GetValue(YProperty);
@@ -32,7 +44,13 @@ namespace DroneSimulations.MVVM.View
         }
 
 
-        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register(nameof(Radius), typeof(double), typeof(DroneView));
+        public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register(nameof(Radius), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
+        {
+            AffectsMeasure= true,
+            AffectsRender= true,
+            SubPropertiesDoNotAffectRender = false,
+            DefaultValue = 0.0
+        });
         public double Radius
         {
             get => (double)GetValue(RadiusProperty);

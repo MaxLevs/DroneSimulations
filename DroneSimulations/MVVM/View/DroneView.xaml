@@ -16,14 +16,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
-                 Height="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
-                 StrokeThickness="1"
-                 Stroke="Black">
-            <Ellipse.Fill>
-                <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
-            </Ellipse.Fill>
-        </Ellipse>
-    </Grid>
+    <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
+             Height="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
+             StrokeThickness="1"
+             Stroke="Black">
+        <Ellipse.Fill>
+            <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
+        </Ellipse.Fill>
+    </Ellipse>
 </UserControl>
