@@ -123,8 +123,6 @@
                            Margin="5,0,0,0"/>
             </StackPanel>
         </DataTemplate>
-
-        <converters:NumberToStringConverter x:Key="NumberToStringConverter"/>
     </Window.Resources>
 
     <Grid>

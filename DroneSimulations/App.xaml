@@ -2,8 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DroneSimulations"
+             xmlns:converters="clr-namespace:DroneSimulations.MVVM.View.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:MBinaryOperationConverter x:Key="View.Converters.BinaryOperation"/>
+            <converters:SMathMultiplyNumberByConst x:Key="View.Converters.MutiplyByConst"/>
+            <converters:NumberToStringConverter x:Key="View.Converters.NumberToStringConverter"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

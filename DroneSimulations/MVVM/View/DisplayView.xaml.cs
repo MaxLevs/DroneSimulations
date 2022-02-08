@@ -30,7 +30,7 @@ namespace DroneSimulations.MVVM.View
             set => SetValue(ItemsProperty, value);
         }
 
-        public static readonly DependencyProperty XOriginProperty = DependencyProperty.RegisterAttached(nameof(XOrigin), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
+        public static readonly DependencyProperty XViewPointPositionProperty = DependencyProperty.RegisterAttached(nameof(XViewPointPosition), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
         {
             AffectsRender = true,
             AffectsMeasure = true,
@@ -38,13 +38,13 @@ namespace DroneSimulations.MVVM.View
             BindsTwoWayByDefault = true,
             DefaultValue = 0.0
         });
-        public double XOrigin
+        public double XViewPointPosition
         {
-            get => (double)GetValue(XOriginProperty);
-            set => SetValue(XOriginProperty, value);
+            get => (double)GetValue(XViewPointPositionProperty);
+            set => SetValue(XViewPointPositionProperty, value);
         }
 
-        public static readonly DependencyProperty YOriginProperty = DependencyProperty.RegisterAttached(nameof(YOrigin), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
+        public static readonly DependencyProperty YViewPointPositionProperty = DependencyProperty.RegisterAttached(nameof(YViewPointPosition), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata
         {
             AffectsRender = true,
             AffectsMeasure = true,
@@ -52,10 +52,10 @@ namespace DroneSimulations.MVVM.View
             BindsTwoWayByDefault = true,
             DefaultValue = 0.0
         });
-        public double YOrigin
+        public double YViewPointPosition
         {
-            get => (double)GetValue(YOriginProperty);
-            set => SetValue(YOriginProperty, value);
+            get => (double)GetValue(YViewPointPositionProperty);
+            set => SetValue(YViewPointPositionProperty, value);
         }
 
         public static readonly DependencyProperty ScaleProperty = DependencyProperty.RegisterAttached(nameof(Scale), typeof(double), typeof(DisplayView), new FrameworkPropertyMetadata

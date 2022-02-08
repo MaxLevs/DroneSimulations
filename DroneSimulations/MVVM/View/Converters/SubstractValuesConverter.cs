@@ -2,10 +2,11 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace DroneSimulations.MVVM.View.Converters
 {
-    public class SubstractValuesConverter : IMultiValueConverter
+    public class SubstractValuesConverter : MarkupExtension, IMultiValueConverter
     {
         public SubstractValuesConverter()
         {
@@ -16,8 +17,14 @@ namespace DroneSimulations.MVVM.View.Converters
         {
             try
             {
-                return values.Select(value => double.Parse(value.ToString() ?? string.Empty))
-                             .Aggregate((acc, cur) => acc - cur);
+                var castedValues = values.OfType<double>().ToList();
+
+                if (castedValues.Count != 2)
+                {
+                    return Binding.DoNothing;
+                }
+
+                return castedValues[0] - castedValues[1];
             }
 
             catch
@@ -31,5 +38,17 @@ namespace DroneSimulations.MVVM.View.Converters
         {
             throw new NotImplementedException(convertBackErrorMessage);
         }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            if (_converter == null)
+            {
+                _converter = new SubstractValuesConverter();
+            }
+
+            return _converter;
+        }
+
+        private static SubstractValuesConverter? _converter;
     }
 }

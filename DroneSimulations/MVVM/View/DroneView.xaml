@@ -12,16 +12,18 @@
              
     <UserControl.Resources>
         <ResourceDictionary>
-            <converters:NumberToMultipliedNumberConverter x:Key="MultiplyConveter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
-             Height="{Binding Radius, ElementName=uc, Converter={StaticResource MultiplyConveter}, ConverterParameter=2}"
-             StrokeThickness="1"
-             Stroke="Black">
-        <Ellipse.Fill>
-            <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
-        </Ellipse.Fill>
-    </Ellipse>
+    <!--Добавить кнопку для выбора элемента списка дронов по клику на дрон-->
+    <Grid>
+        <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=2}"
+                 Height="{Binding Radius, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=2}"
+                 StrokeThickness="1"
+                 Stroke="Black">
+            <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
+            </Ellipse.Fill>
+        </Ellipse>
+    </Grid>
 </UserControl>

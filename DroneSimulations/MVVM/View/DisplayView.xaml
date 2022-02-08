@@ -12,14 +12,11 @@
              x:Name="uc">
 
     <UserControl.Resources>
-        <converters:SubstractValuesConverter x:Key="SubstractValuesConverter"/>
-        <converters:NumberToMultipliedNumberConverter x:Key="NumberToMultipliedNumberConverter"/>
-        <converters:DivideValuesConverter x:Key="DivideValuesConverter"/>
-
         <Style TargetType="ContentPresenter" x:Key="DisplayItemStyle">
             <Setter Property="Canvas.Left">
                 <Setter.Value>
-                    <MultiBinding Converter="{StaticResource SubstractValuesConverter}" Mode="TwoWay">
+                    <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
+                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
                         <Binding Path="X"/>
                         <Binding Path="Radius"/>
                     </MultiBinding>
@@ -27,15 +24,14 @@
             </Setter>
             <Setter Property="Canvas.Top">
                 <Setter.Value>
-                    <MultiBinding Converter="{StaticResource SubstractValuesConverter}" Mode="TwoWay">
+                    <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}" 
+                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
                         <Binding Path="Y"/>
                         <Binding Path="Radius"/>
                     </MultiBinding>
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <converters:NumberToStringConverter x:Key="NumberToStringConverter"/>
     </UserControl.Resources>
 
     <Border BorderBrush="Black"
@@ -44,6 +40,22 @@
             <Rectangle Fill="#cccccc"
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"/>
+
+            <Canvas x:Name="CoordinateGridElements">
+                <Line X1="{Binding ActualWidth, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=0.5}"
+                      Y1="0"
+                      X2="{Binding X1, RelativeSource={RelativeSource Self}}"
+                      Y2="{Binding ActualHeight, ElementName=uc}"
+                      Stroke="Black"
+                      StrokeThickness="1.5"/>
+                <Line X1="0"
+                      Y1="{Binding ActualHeight, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=0.5}"
+                      X2="{Binding ActualWidth, ElementName=uc}"
+                      Y2="{Binding Y1, RelativeSource={RelativeSource Self}}"
+                      Stroke="Black"
+                      StrokeThickness="1.5"/>
+            </Canvas>
+
             <ItemsControl Name="Display"
                           DataContext="{Binding DataContext, ElementName=uc}"
                           ItemsSource="{Binding Items, ElementName=uc}"
@@ -63,37 +75,52 @@
                                          x:Name="drone_view">
                             <local:DroneView.RenderTransform>
                                 <TransformGroup>
-                                <!--
-                                        X="{Binding XOrigin, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
-                                        Y="{Binding YOrigin, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToMultipliedNumberConverter}, ConverterParameter=-1}"
-                                -->
+
                                     <!-- Вычисляемые формулы смещения координат объектов -->
                                     <TranslateTransform>
                                         <TranslateTransform.X>
-                                            <MultiBinding Converter="{StaticResource DivideValuesConverter}">
+                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
+                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
                                                 <Binding Path="ActualWidth"
                                                          RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                                         Converter="{StaticResource NumberToMultipliedNumberConverter}"
+                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
                                                          ConverterParameter="0,5"/>
-                                                <!--<Binding Path="XOrigin" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
-                                                <!--<Binding Path="Scale" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                                <Binding Path="XViewPointPosition"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DisplayView}}"/>
                                             </MultiBinding>
                                         </TranslateTransform.X>
                                         <TranslateTransform.Y>
-                                            <MultiBinding Converter="{StaticResource DivideValuesConverter}">
+                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
+                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
                                                 <Binding Path="ActualHeight"
                                                          RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                                         Converter="{StaticResource NumberToMultipliedNumberConverter}"
+                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
                                                          ConverterParameter="0,5"/>
-                                                <!--<Binding Path="YOrigin" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
-                                                <!--<Binding Path="Scale" RelativeSource="{RelativeSource AncestorType=local:DisplayView}"/>-->
+                                                <Binding Path="YViewPointPosition"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DisplayView}}"/>
                                             </MultiBinding>
                                         </TranslateTransform.Y>
                                     </TranslateTransform>
                                     <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
-                                                    ScaleY="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
-                                                    CenterX="{Binding Radius}"
-                                                    CenterY="{Binding Radius}"/>
+                                                    ScaleY="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}">
+                                        <!--Задать координаты смещения относительно текущего виртуального положения центра координат-->
+                                        <ScaleTransform.CenterX>
+                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
+                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
+                                                <Binding Path="Radius"/>
+                                                <Binding Path="X"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
+                                            </MultiBinding>
+                                        </ScaleTransform.CenterX>
+                                        <ScaleTransform.CenterY>
+                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
+                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
+                                                <Binding Path="Radius"/>
+                                                <Binding Path="Y"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
+                                            </MultiBinding>
+                                        </ScaleTransform.CenterY>
+                                    </ScaleTransform>
                                 </TransformGroup>
                             </local:DroneView.RenderTransform>
                         </local:DroneView>
@@ -105,7 +132,7 @@
                   Margin="0,0,10,10"
                   VerticalAlignment="Bottom"
                   HorizontalAlignment="Right"
-                  Background="Transparent">
+                  Background="#88cccccc">
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Opacity" Value="0.3"/>
@@ -126,8 +153,8 @@
                             <TextBox VerticalAlignment="Center"
                                      TextWrapping="NoWrap"
                                      InputScope="Number"
-                                     Text="{Binding XOrigin, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
-                                     x:Name="XOriginInput"/>
+                                     Text="{Binding XViewPointPosition, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource View.Converters.NumberToStringConverter}}"
+                                     x:Name="XViewPointPositionInput"/>
                         </DockPanel>
                         <DockPanel VerticalAlignment="Center"
                                    Margin="0,5,0,0">
@@ -137,8 +164,8 @@
                             <TextBox VerticalAlignment="Center"
                                      TextWrapping="NoWrap"
                                      InputScope="Number"
-                                     Text="{Binding YOrigin, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
-                                     x:Name="YOriginInput"/>
+                                     Text="{Binding YViewPointPosition, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource View.Converters.NumberToStringConverter}}"
+                                     x:Name="YViewPointPositionInput"/>
                         </DockPanel>
                         <DockPanel VerticalAlignment="Center"
                                    Margin="0,5,0,0">
@@ -148,7 +175,7 @@
                             <TextBox VerticalAlignment="Center"
                                      TextWrapping="NoWrap"
                                      InputScope="Number"
-                                     Text="{Binding Scale, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource NumberToStringConverter}}"
+                                     Text="{Binding Scale, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource View.Converters.NumberToStringConverter}}"
                                      x:Name="ScaleInput"/>
                         </DockPanel>
                     </StackPanel>
