@@ -27,8 +27,8 @@ namespace DroneSimulations.MVVM.ViewModel
             var viewModel = new DroneViewModel
             {
                 Id = id,
-                X = Random.Shared.Next(500),
-                Y = Random.Shared.Next(500),
+                X = Random.Shared.Next(-300, 300),
+                Y = Random.Shared.Next(-150, 150),
                 Name = name,
                 DisplayColor = color,
                 Radius = DefaultRadius,
