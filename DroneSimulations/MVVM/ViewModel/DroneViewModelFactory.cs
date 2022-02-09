@@ -32,13 +32,13 @@ namespace DroneSimulations.MVVM.ViewModel
                 Name = name,
                 DisplayColor = color,
                 Radius = DefaultRadius,
-                StrategyType = DroneViewModel.DroneStrategyEnum.Stupid,
+                StrategyType = DroneStrategyEnum.Stupid,
             };
 
             return viewModel;
         }
 
-        public DroneViewModel CreateWithStrategy(DroneViewModel.DroneStrategyEnum strategy)
+        public DroneViewModel CreateWithStrategy(DroneStrategyEnum strategy)
         {
             int id = nextId++;
             string name = $"Drone-{id}";

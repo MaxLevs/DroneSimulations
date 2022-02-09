@@ -1,4 +1,4 @@
-using DroneSimulations.Common;
+﻿using DroneSimulations.Common;
 using DroneSimulations.MVVM.View;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -6,6 +6,8 @@ using System.Windows.Media;
 
 namespace DroneSimulations.MVVM.ViewModel
 {
+    public enum DroneStrategyEnum { Stupid, Smart }
+
     public enum DroneStateEnum { Normal, Crushed, Finished }
 
     public class DroneViewModel : NotifiableObject
@@ -79,10 +81,12 @@ namespace DroneSimulations.MVVM.ViewModel
         {
             get => Points[0].Y;
             set {
-                Points[0] = new Point(Points[0].Y, value);
+                Points[0] = new Point(Points[0].X, value);
                 OnPropertyChanged();
             }
         }
+
+        public PointCollection Points { get; set; }
 
         public DroneViewModel() : base()
         {
@@ -94,7 +98,5 @@ namespace DroneSimulations.MVVM.ViewModel
                 new Point(0, 0)
             };
         }
-
-        public enum DroneStrategyEnum { Stupid, Smart }
     }
 }
