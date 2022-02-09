@@ -1,4 +1,4 @@
-<UserControl x:Class="DroneSimulations.MVVM.View.DisplayView"
+﻿<UserControl x:Class="DroneSimulations.MVVM.View.DisplayView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,7 +20,9 @@
             </Setter>
             <Setter Property="Canvas.Top">
                 <Setter.Value>
-                    <Binding Path="Y"/>
+                    <Binding Path="Y"
+                             Converter="{StaticResource View.Converters.MutiplyByConst}"
+                             ConverterParameter="-1"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -97,21 +99,27 @@
                                     </TranslateTransform>
 
                                     <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
-                                                    ScaleY="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}">
+                                                    ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}">
 
                                         <!-- [TODO] Задать координаты смещения относительно текущего виртуального положения центра координат -->
                                         <ScaleTransform.CenterX>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
                                                           ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
-                                                <Binding Path="Radius"/>
+                                                <Binding Path="ActualWidth"
+                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                                         ConverterParameter="0,5"/>
                                                 <Binding Path="X"
                                                          RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
                                             </MultiBinding>
                                         </ScaleTransform.CenterX>
                                         <ScaleTransform.CenterY>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
-                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
-                                                <Binding Path="Radius"/>
+                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
+                                                <Binding Path="ActualHeight"
+                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                                         ConverterParameter="0,5"/>
                                                 <Binding Path="Y"
                                                          RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
                                             </MultiBinding>
