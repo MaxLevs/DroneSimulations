@@ -6,6 +6,9 @@ using System.Windows.Markup;
 
 namespace DroneSimulations.MVVM.View.Converters
 {
+    /// <summary>
+    /// Типы арифметических операций, поддерживаемых MBinaryOperatorConverter
+    /// </summary>
     public enum MathBinaryOperationType
     {
         Add,
@@ -15,6 +18,9 @@ namespace DroneSimulations.MVVM.View.Converters
         Modulo,
     }
 
+    /// <summary>
+    /// Класс-ковертер для мультибиндинга, позволяющий производить бинарные операции над двумя привязанными свойствами
+    /// </summary>
     public class MBinaryOperationConverter : IMultiValueConverter
     {
         public MBinaryOperationConverter()
@@ -22,6 +28,7 @@ namespace DroneSimulations.MVVM.View.Converters
 
         }
 
+        /// <inheritdoc/>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             try
@@ -65,6 +72,7 @@ namespace DroneSimulations.MVVM.View.Converters
             }
         }
 
+        /// <inheritdoc/>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             string convertBackErrorMessage = $"ConvertBack() method is not implemented for {GetType().Name}";
