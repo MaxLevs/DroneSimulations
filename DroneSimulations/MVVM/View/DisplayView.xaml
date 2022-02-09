@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DroneSimulations.MVVM.View.DisplayView"
+<UserControl x:Class="DroneSimulations.MVVM.View.DisplayView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,20 +15,12 @@
         <Style TargetType="ContentPresenter" x:Key="DisplayItemStyle">
             <Setter Property="Canvas.Left">
                 <Setter.Value>
-                    <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
-                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
-                        <Binding Path="X"/>
-                        <Binding Path="Radius"/>
-                    </MultiBinding>
+                    <Binding Path="X"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Canvas.Top">
                 <Setter.Value>
-                    <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}" 
-                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
-                        <Binding Path="Y"/>
-                        <Binding Path="Radius"/>
-                    </MultiBinding>
+                    <Binding Path="Y"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -76,7 +68,9 @@
                             <local:DroneView.RenderTransform>
                                 <TransformGroup>
 
-                                    <!-- Вычисляемые формулы смещения координат объектов -->
+                                    <!-- Вычисляемые формулы смещения координат объектов 
+                                         в зависимости от положения точки обзора
+                                         и множителя масштаба -->
                                     <TranslateTransform>
                                         <TranslateTransform.X>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
@@ -101,9 +95,11 @@
                                             </MultiBinding>
                                         </TranslateTransform.Y>
                                     </TranslateTransform>
+
                                     <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
                                                     ScaleY="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}">
-                                        <!--Задать координаты смещения относительно текущего виртуального положения центра координат-->
+
+                                        <!-- [TODO] Задать координаты смещения относительно текущего виртуального положения центра координат -->
                                         <ScaleTransform.CenterX>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
                                                           ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">

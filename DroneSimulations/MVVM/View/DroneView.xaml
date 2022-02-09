@@ -15,15 +15,23 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--Добавить кнопку для выбора элемента списка дронов по клику на дрон-->
+    <!-- [TODO] Добавить кнопку для выбора элемента списка дронов по клику на дрон-->
     <Grid>
-        <Ellipse Width="{Binding Radius, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=2}"
-                 Height="{Binding Radius, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=2}"
+        <Ellipse Width="{Binding Radius, ElementName=uc}"
+                 Height="{Binding Radius, ElementName=uc}"
                  StrokeThickness="1"
                  Stroke="Black">
             <Ellipse.Fill>
                 <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
             </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <!--Эта трансформация используется для того, чтобы координаты расположения элемента совпадали с центром объекта-->
+                <ScaleTransform CenterX="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Ellipse}}}"
+                                CenterY="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Ellipse}}}"
+                                ScaleX="2"
+                                ScaleY="2"
+                                />
+            </Ellipse.RenderTransform>
         </Ellipse>
     </Grid>
 </UserControl>

@@ -17,7 +17,7 @@ namespace DroneSimulations.MVVM.View.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (double.TryParse(value.ToString().Replace('.', ','), out var number))
+            if (double.TryParse(value.ToString()?.Replace('.', ','), out var number))
             {
                 return number;
             }
