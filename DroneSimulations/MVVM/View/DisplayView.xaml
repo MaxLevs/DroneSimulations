@@ -12,12 +12,19 @@
              x:Name="uc">
 
     <UserControl.Resources>
-        <Style TargetType="ContentPresenter" x:Key="DisplayItemStyle">
+        <!-- #region
+            Стили для автоматичского расположения дочерних элементов на Холсте
+            по заданным их внутренним координатам
+        -->
+        <Style TargetType="ContentPresenter"
+               x:Key="DisplayItemStyle">
+
             <Setter Property="Canvas.Left">
                 <Setter.Value>
                     <Binding Path="X"/>
                 </Setter.Value>
             </Setter>
+
             <Setter Property="Canvas.Top">
                 <Setter.Value>
                     <Binding Path="Y"
@@ -26,15 +33,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
+
     </UserControl.Resources>
 
     <Border BorderBrush="Black"
             BorderThickness="1">
         <Grid>
+
+            <!-- #region Фон -->
             <Rectangle Fill="#cccccc"
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch"/>
+            <!-- #endregion -->
 
+            <!-- #region Элементы координатной сетки -->
             <Canvas x:Name="CoordinateGridElements">
                 <Line X1="{Binding ActualWidth, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=0.5}"
                       Y1="0"
@@ -49,11 +62,14 @@
                       Stroke="Black"
                       StrokeThickness="1.5"/>
             </Canvas>
+            <!-- #endregion -->
 
+            <!-- #region Отображаемые элементы -->
             <ItemsControl Name="Display"
                           DataContext="{Binding DataContext, ElementName=uc}"
                           ItemsSource="{Binding Items, ElementName=uc}"
                           ItemContainerStyle="{StaticResource DisplayItemStyle}">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="Transparent"
@@ -61,6 +77,7 @@
                                 ClipToBounds="True"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
                         <local:DroneView X="{Binding X}" Y="{Binding Y}"
@@ -70,9 +87,12 @@
                             <local:DroneView.RenderTransform>
                                 <TransformGroup>
 
-                                    <!-- Вычисляемые формулы смещения координат объектов 
-                                         в зависимости от положения точки обзора
-                                         и множителя масштаба -->
+                                    <!-- 
+                                        Вычисляемые формулы смещения координат объектов 
+                                        в зависимости от положения точки обзора
+                                        и множителя масштаба
+                                        (от левого верхнего угла Холста до его центра + смещение относительно точки обзора)
+                                    -->
                                     <TranslateTransform>
                                         <TranslateTransform.X>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
@@ -98,10 +118,11 @@
                                         </TranslateTransform.Y>
                                     </TranslateTransform>
 
+                                    <!--
+                                        Ресайз относительно точки обзора (центр Холста)
+                                    -->
                                     <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
                                                     ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}">
-
-                                        <!-- [TODO] Задать координаты смещения относительно текущего виртуального положения центра координат -->
                                         <ScaleTransform.CenterX>
                                             <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
                                                           ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
@@ -131,7 +152,9 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <!-- #endregion -->
 
+            <!--#region Элементы управления параметрами -->
             <Grid Width="200"
                   Margin="0,0,10,10"
                   VerticalAlignment="Bottom"
@@ -176,15 +199,21 @@
                             <Label Content="Scale:"
                                    Width="55px"
                                    Margin="0,0,5,0"/>
-                            <TextBox VerticalAlignment="Center"
-                                     TextWrapping="NoWrap"
-                                     InputScope="Number"
-                                     Text="{Binding Scale, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}, Converter={StaticResource View.Converters.NumberToStringConverter}}"
-                                     x:Name="ScaleInput"/>
+                            <Slider VerticalAlignment="Center"
+                                    InputScope="Number"
+                                    Value="{Binding Scale, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
+                                    Minimum="0.3"
+                                    Maximum="3"
+                                    TickFrequency="0.1"
+                                    IsSnapToTickEnabled="True"
+                                    TickPlacement="BottomRight"
+                                    x:Name="ScaleInput"/>
                         </DockPanel>
                     </StackPanel>
                 </GroupBox>
             </Grid>
+            <!--#endregion-->
+
         </Grid>
     </Border>
 </UserControl>
