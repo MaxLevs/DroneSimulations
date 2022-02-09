@@ -43,7 +43,8 @@
     </UserControl.Resources>
 
     <Border BorderBrush="Black"
-            BorderThickness="1">
+            BorderThickness="1"
+            ClipToBounds="True">
         <Grid>
 
             <!-- #region Фон -->
@@ -78,21 +79,9 @@
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="Transparent"
-                                SnapsToDevicePixels="True"
-                                ClipToBounds="True"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
-                        <local:DroneView X="{Binding X}" Y="{Binding Y}"
-                                         Radius="{Binding Radius}"
-                                         Color="{Binding DisplayColor}"
-                                         DataContext="{Binding DataContext, RelativeSource={RelativeSource Self}}"
-                                         x:Name="drone_view">
-                            <local:DroneView.RenderTransform>
+                                SnapsToDevicePixels="True">
+                            <Canvas.RenderTransform>
                                 <TransformGroup>
-
                                     <!-- 
                                         Вычисляемые формулы смещения координат объектов 
                                         в зависимости от положения точки обзора
@@ -130,30 +119,31 @@
                                     <ScaleTransform ScaleX="{Binding Scale, RelativeSource={RelativeSource AncestorType=local:DisplayView}}"
                                                     ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Self}}">
                                         <ScaleTransform.CenterX>
-                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
-                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Subtract}">
-                                                <Binding Path="ActualWidth"
-                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
-                                                         ConverterParameter="0,5"/>
-                                                <Binding Path="X"
-                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
-                                            </MultiBinding>
+                                            <Binding Path="ActualWidth"
+                                                     RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                     Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                                     ConverterParameter="0,5"/>
                                         </ScaleTransform.CenterX>
                                         <ScaleTransform.CenterY>
-                                            <MultiBinding Converter="{StaticResource View.Converters.BinaryOperation}"
-                                                          ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
-                                                <Binding Path="ActualHeight"
-                                                         RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                                         Converter="{StaticResource View.Converters.MutiplyByConst}"
-                                                         ConverterParameter="0,5"/>
-                                                <Binding Path="Y"
-                                                         RelativeSource="{RelativeSource AncestorType={x:Type local:DroneView}}"/>
-                                            </MultiBinding>
+                                            <Binding Path="ActualHeight"
+                                                     RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                                     Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                                     ConverterParameter="0,5"/>
                                         </ScaleTransform.CenterY>
                                     </ScaleTransform>
                                 </TransformGroup>
-                            </local:DroneView.RenderTransform>
+                            </Canvas.RenderTransform>
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
+                        <local:DroneView X="{Binding X}" Y="{Binding Y}"
+                                         Radius="{Binding Radius}"
+                                         Color="{Binding DisplayColor}"
+                                         DataContext="{Binding DataContext, RelativeSource={RelativeSource Self}}"
+                                         x:Name="drone_view">
                         </local:DroneView>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
