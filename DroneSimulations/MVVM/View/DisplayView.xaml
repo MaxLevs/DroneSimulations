@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DroneSimulations.MVVM.View"
              xmlns:viewmodels="clr-namespace:DroneSimulations.MVVM.ViewModel"
              xmlns:converters="clr-namespace:DroneSimulations.MVVM.View.Converters"
@@ -17,9 +18,8 @@
     </i:Interaction.Behaviors>
 
     <UserControl.Resources>
-        <!-- #region
-            Стили для автоматичского расположения дочерних элементов на Холсте
-            по заданным их внутренним координатам
+        <!-- #region Стили для автоматичского расположения дочерних элементов на Холсте 
+                     по заданным их внутренним координатам
         -->
         <Style TargetType="ContentPresenter"
                x:Key="DisplayItemStyle">
@@ -171,7 +171,25 @@
                         <Setter Property="Opacity" Value="0.3"/>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Opacity" Value="1"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             From="0.3" To="1"
+                                                             Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             From="1" To="0.3"
+                                                             Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
