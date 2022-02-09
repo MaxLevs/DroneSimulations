@@ -60,9 +60,7 @@ namespace DroneSimulations.MVVM.ViewModel
         {
             get => Points[0].X;
             set {
-                var point = Points[0];
-                point.X = value;
-                Points[0] = point;
+                Points[0] = new Point(value, Points[0].Y);
                 OnPropertyChanged();
             }
         }
@@ -71,9 +69,7 @@ namespace DroneSimulations.MVVM.ViewModel
         {
             get => Points[0].Y;
             set {
-                var point = Points[0];
-                point.Y = value;
-                Points[0] = point;
+                Points[0] = new Point(Points[0].Y, value);
                 OnPropertyChanged();
             }
         }
