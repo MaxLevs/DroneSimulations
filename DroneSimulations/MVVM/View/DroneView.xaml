@@ -12,6 +12,15 @@
              
     <UserControl.Resources>
         <ResourceDictionary>
+            <Style TargetType="{x:Type Ellipse}" x:Key="DroneElipseStyle">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.State, ElementName=uc}" Value="{x:Static viewmodels:DroneStateEnum.Crushed}">
+                        <Setter Property="StrokeDashArray" Value="2 2"/>
+                    </DataTrigger>
+                </Style.Triggers>
+
+                <Setter Property="StrokeDashArray" Value="{x:Null}"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -20,7 +29,8 @@
         <Ellipse Width="{Binding Radius, ElementName=uc}"
                  Height="{Binding Radius, ElementName=uc}"
                  StrokeThickness="1"
-                 Stroke="Black">
+                 Stroke="Black"
+                 Style="{StaticResource DroneElipseStyle}">
             <Ellipse.Fill>
                 <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
             </Ellipse.Fill>
