@@ -18,7 +18,6 @@ namespace DroneSimulations.MVVM.ViewModel
     {
         private readonly DroneViewModelFactory _droneFactory;
 
-        public DisplayViewModel DisplayViewModel { get; set; }
         public ObservableCollection<DroneViewModel> Drones { get; private set; }
 
         public MainViewModel() : base()
@@ -26,7 +25,6 @@ namespace DroneSimulations.MVVM.ViewModel
             var colorFacotry = new ColorFactory();
             _droneFactory = new DroneViewModelFactory(colorFacotry);
             Drones = new ObservableCollection<DroneViewModel>();
-            DisplayViewModel = new DisplayViewModel();
 
             AddDroneCommand = new RelyCommand(_ =>
             {
