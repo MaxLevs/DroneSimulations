@@ -16,7 +16,7 @@ namespace DroneSimulations.Common
         /// <param name="property">Анимируемое проперти</param>
         /// <param name="toValue">Конечное значение анимации</param>
         /// <param name="duration">Продолжительность анимации</param>
-        public static void AnimateDoubleProperty(this UIElement associatedObject, DependencyProperty property, double toValue, TimeSpan duration, double? accelRatio, double? decelRatio)
+        public static void AnimateDoubleProperty(this UIElement animationTarget, DependencyProperty property, double toValue, TimeSpan duration, double? accelRatio, double? decelRatio)
         {
             var xOffsetAnimation = new DoubleAnimation(toValue, duration, FillBehavior.Stop)
             {
@@ -27,14 +27,14 @@ namespace DroneSimulations.Common
             EventHandler? OnActionIsOver = null;
             OnActionIsOver = (sender, args) =>
             {
-                associatedObject.SetValue(property, toValue);
+                animationTarget.SetValue(property, toValue);
 
                 xOffsetAnimation.Completed -= OnActionIsOver;
             };
 
             xOffsetAnimation.Completed += OnActionIsOver;
 
-            associatedObject.BeginAnimation(property, xOffsetAnimation);
+            animationTarget.BeginAnimation(property, xOffsetAnimation);
         }
     }
 }
