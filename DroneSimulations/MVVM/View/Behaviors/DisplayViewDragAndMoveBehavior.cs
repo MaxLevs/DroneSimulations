@@ -12,7 +12,7 @@ namespace DroneSimulations.MVVM.View.Behaviors
     /// <summary>
     /// Класс-поведение, реализующий перемещение элементов внутри DisplayView
     /// </summary>
-    public class DragInDisplayBehavior : Behavior<DisplayView>
+    public class DisplayViewDragAndMoveBehavior : Behavior<DisplayView>
     {
         /// <summary>
         /// Флаг, указывающий, находится ли элемент в данный момент в состоянии перетаскивания

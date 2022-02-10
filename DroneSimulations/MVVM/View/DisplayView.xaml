@@ -14,8 +14,8 @@
              x:Name="uc">
 
     <i:Interaction.Behaviors>
-        <behaviors:DragInDisplayBehavior/>
-        <behaviors:MouseWheelResizeInDisplayViewBehavior ScaleMinValue="0.3"
+        <behaviors:DisplayViewDragAndMoveBehavior/>
+        <behaviors:DisplayViewMouseWheelResizeBehaviour ScaleMinValue="0.3"
                                                          ScaleMaxValue="3"
                                                          ScaleDelta="0.1"/>
     </i:Interaction.Behaviors>

@@ -12,7 +12,7 @@ namespace DroneSimulations.MVVM.View.Behaviors
     /// <summary>
     /// Класс-поведение, реализующий изменение масштаба с использованием колёсико мыши внутри DisplayView
     /// </summary>
-    public class MouseWheelResizeInDisplayViewBehavior : Behavior<DisplayView>
+    public class DisplayViewMouseWheelResizeBehaviour : Behavior<DisplayView>
     {
         private bool IsOnResizableArea = false;
 
@@ -21,7 +21,7 @@ namespace DroneSimulations.MVVM.View.Behaviors
         public static readonly DependencyProperty _scaleDelta = DependencyProperty.RegisterAttached(
             nameof(ScaleDelta),
             typeof(double),
-            typeof(MouseWheelResizeInDisplayViewBehavior),
+            typeof(DisplayViewMouseWheelResizeBehaviour),
             new FrameworkPropertyMetadata()
             {
                 DefaultValue = 1.0,
@@ -38,7 +38,7 @@ namespace DroneSimulations.MVVM.View.Behaviors
         public static readonly DependencyProperty _scaleMinValue = DependencyProperty.RegisterAttached(
             nameof(ScaleMinValue),
             typeof(double),
-            typeof(MouseWheelResizeInDisplayViewBehavior),
+            typeof(DisplayViewMouseWheelResizeBehaviour),
             new FrameworkPropertyMetadata()
             {
                 DefaultValue = 0.3,
@@ -55,7 +55,7 @@ namespace DroneSimulations.MVVM.View.Behaviors
         public static readonly DependencyProperty _scaleMaxValue = DependencyProperty.RegisterAttached(
             nameof(ScaleMaxValue),
             typeof(double),
-            typeof(MouseWheelResizeInDisplayViewBehavior),
+            typeof(DisplayViewMouseWheelResizeBehaviour),
             new FrameworkPropertyMetadata()
             {
                 DefaultValue = 3.0,
