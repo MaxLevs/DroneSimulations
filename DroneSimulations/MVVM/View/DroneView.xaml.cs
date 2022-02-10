@@ -70,32 +70,6 @@ namespace DroneSimulations.MVVM.View
         public DroneView()
         {
             InitializeComponent();
-
-            var radiusBinding = new Binding(nameof(Radius));
-            radiusBinding.Source = this;
-            radiusBinding.Mode = BindingMode.TwoWay;
-
-            var xPositionBinding = new Binding(nameof(X));
-            xPositionBinding.Source = this;
-            xPositionBinding.Mode = BindingMode.TwoWay;
-
-            var yPositionBinding = new Binding(nameof(Y));
-            yPositionBinding.Source = this;
-            yPositionBinding.Mode = BindingMode.TwoWay;
-
-            var leftBinding = new MultiBinding();
-            leftBinding.Converter = new SubstractValuesConverter();
-            leftBinding.Mode = BindingMode.TwoWay;
-            leftBinding.Bindings.Add(xPositionBinding);
-            leftBinding.Bindings.Add(radiusBinding);
-            SetBinding(Canvas.LeftProperty, leftBinding);
-
-            var topBinding = new MultiBinding();
-            topBinding.Converter = new SubstractValuesConverter();
-            topBinding.Mode = BindingMode.TwoWay;
-            topBinding.Bindings.Add(yPositionBinding);
-            topBinding.Bindings.Add(radiusBinding);
-            SetBinding(Canvas.TopProperty, topBinding);
         }
     }
 }
