@@ -23,6 +23,8 @@ namespace DroneSimulations.MVVM.View
     [ContentProperty(nameof(ItemsProperty))]
     public partial class DisplayView : UserControl
     {
+        #region Dependency Properties
+
         public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register(nameof(Items), typeof(IList), typeof(DisplayView));
         public IList Items
         {
@@ -71,6 +73,8 @@ namespace DroneSimulations.MVVM.View
             get => (double)GetValue(ScaleProperty);
             set => SetValue(ScaleProperty, value);
         }
+
+        #endregion
 
         public DisplayView()
         {
