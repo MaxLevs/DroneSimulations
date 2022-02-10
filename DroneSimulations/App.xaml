@@ -12,7 +12,7 @@
 
             <converters:MBinaryOperationConverter x:Key="View.Converters.BinaryOperation"/>
             <converters:SMathMultiplyNumberByConst x:Key="View.Converters.MutiplyByConst"/>
-            <converters:NumberToStringConverter x:Key="View.Converters.NumberToStringConverter"/>
+            <converters:SNumberToStringConverter x:Key="View.Converters.NumberToStringConverter"/>
             <converters:MTwoDoublesToPointConverter x:Key="View.Converters.TwoDoubleToPoint"/>
         </ResourceDictionary>
     </Application.Resources>

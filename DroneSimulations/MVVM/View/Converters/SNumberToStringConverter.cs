@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace DroneSimulations.MVVM.View.Converters
 {
-    public class NumberToStringConverter : IValueConverter
+    public class SNumberToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

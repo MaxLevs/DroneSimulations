@@ -4,9 +4,9 @@ using System.Windows.Data;
 
 namespace DroneSimulations.MVVM.View.Converters
 {
-    public class NumberToMultipliedNumberConverter : IValueConverter
+    public class SNumberToMultipliedNumberConverter : IValueConverter
     {
-        public NumberToMultipliedNumberConverter()
+        public SNumberToMultipliedNumberConverter()
         {
 
         }
@@ -31,7 +31,7 @@ namespace DroneSimulations.MVVM.View.Converters
             }
         }
 
-        const string convertBackErrorMessage = $"ConvertBack() is not implemented for {nameof(NumberToMultipliedNumberConverter)}";
+        const string convertBackErrorMessage = $"ConvertBack() is not implemented for {nameof(SNumberToMultipliedNumberConverter)}";
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double times = 1;
