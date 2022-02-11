@@ -11,14 +11,15 @@
              xmlns:behaviors="clr-namespace:DroneSimulations.MVVM.View.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
+             IsManipulationEnabled="True"
              x:Name="uc">
 
     <i:Interaction.Behaviors>
         <behaviors:DisplayViewDragAndMoveBehavior/>
         <behaviors:DisplayViewRestoreSettingsDoubleClickBehavior/>
         <behaviors:DisplayViewMouseWheelResizeBehaviour ScaleMinValue="0.3"
-                                                         ScaleMaxValue="3"
-                                                         ScaleDelta="0.1"/>
+                                                        ScaleMaxValue="3"
+                                                        ScaleDelta="0.1"/>
     </i:Interaction.Behaviors>
 
     <UserControl.Resources>
