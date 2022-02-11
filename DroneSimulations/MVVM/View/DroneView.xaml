@@ -29,26 +29,41 @@
                                 ScaleX="2"
                                 ScaleY="2"/>
             </TransformGroup>
+
+            <Style TargetType="Button" x:Key="DroneButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse Width="{Binding Radius, ElementName=uc}"
+                                         Height="{Binding Radius, ElementName=uc}"
+                                         Stroke="Black"
+                                         StrokeThickness="1"
+                                         Style="{StaticResource DroneElipseStyle}"
+                                         Fill="{TemplateBinding Background}"/>
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid RenderTransform="{StaticResource BindCoordinatesToCenterTransform}">
 
-        <Ellipse Width="{Binding Radius, ElementName=uc}"
-                 Height="{Binding Radius, ElementName=uc}"
-                 StrokeThickness="1"
-                 Stroke="Black"
-                 Style="{StaticResource DroneElipseStyle}"
-                 x:Name="DroneShape">
+        <Button Command="{Binding SelectCommand, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
+                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
+                BorderThickness="0"
+                Style="{StaticResource DroneButton}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
 
-            <Ellipse.Fill>
+            <Button.Background>
                 <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
-            </Ellipse.Fill>
-
-        </Ellipse>
-
-        <Button Clip="{Binding RenderedGeometry, ElementName=DroneShape}"
-                Background="Transparent"/>
-
+            </Button.Background>
+        </Button>
     </Grid>
 </UserControl>

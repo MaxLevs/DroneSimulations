@@ -155,6 +155,7 @@
                         <local:DroneView X="{Binding X}" Y="{Binding Y}"
                                          Radius="{Binding Radius}"
                                          Color="{Binding DisplayColor}"
+                                         SelectCommand="{Binding SelectItemCommand, Mode=TwoWay}"
                                          DataContext="{Binding DataContext, RelativeSource={RelativeSource Self}}"
                                          x:Name="drone_view">
                         </local:DroneView>

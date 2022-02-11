@@ -2,6 +2,7 @@
 using DroneSimulations.MVVM.View;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DroneSimulations.MVVM.ViewModel
@@ -14,8 +15,8 @@ namespace DroneSimulations.MVVM.ViewModel
     {
         public int Id { get; set; }
 
-        private string _name { get; set; }
-        public string Name
+        private string? _name;
+        public string? Name
         {
             get => _name;
             set
@@ -88,9 +89,19 @@ namespace DroneSimulations.MVVM.ViewModel
 
         public PointCollection Points { get; set; }
 
+        private ICommand? selectItemCommand;
+        public ICommand? SelectItemCommand
+        {
+            get => selectItemCommand;
+            set
+            {
+                selectItemCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DroneViewModel() : base()
         {
-            _name = string.Empty;
             _radius = 0;
             _state = DroneStateEnum.Normal;
             Points = new PointCollection()
