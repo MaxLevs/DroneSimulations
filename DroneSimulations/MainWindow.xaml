@@ -18,50 +18,6 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <ControlTemplate x:Key="DefaultButtonTemplate"
-                         TargetType="Button">
-            <Border CornerRadius="10"
-                    MinWidth="20"
-                    MinHeight="20"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="1"
-                    Background="{TemplateBinding Background}">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-            </Border>
-        </ControlTemplate>
-
-        <Style x:Key="DefaultButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#eaeaea"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#cccccc"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <DataTemplate x:Key="DroneListItemTemplate"
-                      DataType="{x:Type viewmodels:DroneViewModel}">
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Center">
-                <Ellipse Width="10"
-                         Height="10"
-                         Stroke="Black"
-                         StrokeThickness="1">
-                    <Ellipse.Fill>
-                        <SolidColorBrush Color="{Binding DisplayColor}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <TextBlock Text="{Binding Name}"
-                           Margin="5,0,0,0"/>
-                <TextBlock Text="{Binding Radius}"
-                           Margin="5,0,0,0"/>
-            </StackPanel>
-        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -128,7 +84,6 @@
                                         <Button Name="AddDroneButton"
                                                 ToolTip="Добавить дрона"
                                                 Margin="0, 0, 3, 0"
-                                                Template="{StaticResource DefaultButtonTemplate}"
                                                 Style="{StaticResource DefaultButtonStyle}"
                                                 Command="{Binding AddDroneCommand}">
                                             <Button.Content>
@@ -145,7 +100,6 @@
                                         <Button Name="RemoveSelectedDronesButton" 
                                                 ToolTip="Удалить выделенных дронов"
                                                 Margin="0, 0, 3, 0"
-                                                Template="{StaticResource DefaultButtonTemplate}"
                                                 Style="{StaticResource DefaultButtonStyle}"
                                                 Command="{Binding RemoveSelectedDronesCommand}"
                                                 CommandParameter="{Binding SelectedItems, ElementName=ListOfDrones}">
@@ -161,7 +115,6 @@
                                                 ToolTip="Очистить список"
                                                 Margin="0, 0, 5, 0"
                                                 Background="#FFDC654D"
-                                                Template="{StaticResource DefaultButtonTemplate}"
                                                 Style="{StaticResource DefaultButtonStyle}"
                                                 Command="{Binding ClearDronesListCommand}">
                                             <Button.Content>

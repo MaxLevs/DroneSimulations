@@ -22,43 +22,6 @@
                                                         ScaleDelta="0.1"/>
     </i:Interaction.Behaviors>
 
-    <UserControl.Resources>
-        <!-- #region Стили для автоматичского расположения дочерних элементов на Холсте 
-                     по заданным их внутренним координатам
-        -->
-        <Style TargetType="ContentPresenter"
-               x:Key="DisplayItemStyle">
-
-            <Setter Property="Canvas.Left">
-                <Setter.Value>
-                    <MultiBinding Converter="{StaticResource ResourceKey=View.Converters.BinaryOperation}"
-                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
-                        <Binding Path="ActualWidth"
-                                 RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                 Converter="{StaticResource View.Converters.MutiplyByConst}"
-                                 ConverterParameter="0,5"/>
-                        <Binding Path="X"/>
-                    </MultiBinding>
-                </Setter.Value>
-            </Setter>
-
-            <Setter Property="Canvas.Top">
-                <Setter.Value>
-                    <MultiBinding Converter="{StaticResource ResourceKey=View.Converters.BinaryOperation}"
-                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
-                        <Binding Path="ActualHeight"
-                                 RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
-                                 Converter="{StaticResource View.Converters.MutiplyByConst}"
-                                 ConverterParameter="0,5"/>
-                        <Binding Path="Y"/>
-                    </MultiBinding>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--#endregion-->
-
-    </UserControl.Resources>
-
     <Border BorderBrush="Black"
             BorderThickness="1"
             ClipToBounds="True">
@@ -91,7 +54,7 @@
             <ItemsControl Name="Display"
                           DataContext="{Binding DataContext, ElementName=uc}"
                           ItemsSource="{Binding Items, ElementName=uc}"
-                          ItemContainerStyle="{StaticResource DisplayItemStyle}">
+                          ItemContainerStyle="{DynamicResource DisplayItemStyle}">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -245,4 +208,41 @@
 
         </Grid>
     </Border>
+
+    <UserControl.Resources>
+        <!-- #region Стили для автоматичского расположения дочерних элементов на Холсте 
+                     по заданным их внутренним координатам
+        -->
+        <Style TargetType="ContentPresenter"
+               x:Key="DisplayItemStyle">
+
+            <Setter Property="Canvas.Left">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource ResourceKey=View.Converters.BinaryOperation}"
+                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
+                        <Binding Path="ActualWidth"
+                                 RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                 Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                 ConverterParameter="0,5"/>
+                        <Binding Path="X"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Canvas.Top">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource ResourceKey=View.Converters.BinaryOperation}"
+                                  ConverterParameter="{x:Static converters:MathBinaryOperationType.Add}">
+                        <Binding Path="ActualHeight"
+                                 RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                 Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                 ConverterParameter="0,5"/>
+                        <Binding Path="Y"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--#endregion-->
+
+    </UserControl.Resources>
 </UserControl>

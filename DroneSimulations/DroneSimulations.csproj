@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Folder Include="MVVM\Model\" />
-    <Folder Include="Themes\" />
     <Folder Include="Images\" />
     <Folder Include="Fonts\" />
   </ItemGroup>

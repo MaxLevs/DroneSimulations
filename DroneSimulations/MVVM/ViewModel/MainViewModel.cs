@@ -111,18 +111,26 @@ namespace DroneSimulations.MVVM.ViewModel
                 {
                     var execute = (object? args) =>
                     {
-                        var viewModel = (DroneViewModel)args;
+                        var viewModel = (DroneViewModel?)args;
 
                         // [TODO] Execute method selecting
 
-                        var message = $"Выбран дрон с именем {viewModel?.Name ?? "[ЗАСЕКРЕЧЕНО]"}";
-                        MessageBox.Show(message, "Кто-то тыкнул в дрона", MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (viewModel != null)
+                        {
+                            var message = $"Выбран дрон с именем {viewModel.Name}";
+                            MessageBox.Show(message, "Кто-то тыкнул в дрона", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+
+                        else
+                        {
+                            var message = $"Дрон был тыкнут, но данные не получены";
+                            MessageBox.Show(message, "Кто-то тыкнул в дрона", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     };
 
                     var canExecute = (object? args) =>
                     {
-                        return args != null
-                            && args is DroneViewModel;
+                        return args is DroneViewModel;
                     };
 
                     _selectDroneFromViewModelCommand = new RelyCommand(execute, canExecute);

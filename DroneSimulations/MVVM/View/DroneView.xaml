@@ -10,18 +10,24 @@
              d:DesignHeight="30" d:DesignWidth="30"
              x:Name="uc">
              
+
+    <Grid RenderTransform="{DynamicResource BindCoordinatesToCenterTransform}">
+
+        <Button Command="{Binding SelectCommand, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
+                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
+                BorderThickness="0"
+                Style="{DynamicResource DroneButton}"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch">
+
+            <Button.Background>
+                <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
+            </Button.Background>
+        </Button>
+    </Grid>
+
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style TargetType="{x:Type Ellipse}" x:Key="DroneElipseStyle">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding DataContext.State, ElementName=uc}" Value="{x:Static viewmodels:DroneStateEnum.Crushed}">
-                        <Setter Property="StrokeDashArray" Value="2 2"/>
-                    </DataTrigger>
-                </Style.Triggers>
-
-                <Setter Property="StrokeDashArray" Value="{x:Null}"/>
-            </Style>
-
             <!--Эта трансформация используется для того, чтобы координаты расположения элемента совпадали с центром объекта-->
             <TransformGroup x:Key="BindCoordinatesToCenterTransform">
                 <ScaleTransform CenterX="{Binding ActualWidth, ElementName=uc}"
@@ -39,7 +45,7 @@
                                          Height="{Binding Radius, ElementName=uc}"
                                          Stroke="Black"
                                          StrokeThickness="1"
-                                         Style="{StaticResource DroneElipseStyle}"
+                                         Style="{DynamicResource DroneElipseStyle}"
                                          Fill="{TemplateBinding Background}"/>
                                 <ContentPresenter VerticalAlignment="Center"
                                                   HorizontalAlignment="Center"/>
@@ -52,18 +58,4 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid RenderTransform="{StaticResource BindCoordinatesToCenterTransform}">
-
-        <Button Command="{Binding SelectCommand, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
-                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType=local:DroneView}}"
-                BorderThickness="0"
-                Style="{StaticResource DroneButton}"
-                VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch">
-
-            <Button.Background>
-                <SolidColorBrush Color="{Binding Color, ElementName=uc}"/>
-            </Button.Background>
-        </Button>
-    </Grid>
 </UserControl>

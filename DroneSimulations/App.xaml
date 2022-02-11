@@ -7,7 +7,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                
+                <ResourceDictionary Source="Themes/ListOfDronesTheme.xaml"/>
+                <ResourceDictionary Source="Themes/DroneViewTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:MBinaryOperationConverter x:Key="View.Converters.BinaryOperation"/>

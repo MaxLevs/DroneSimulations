@@ -26,7 +26,7 @@ namespace DroneSimulations.MVVM.ViewModel
             }
         }
 
-        private double _radius { get; set; }
+        private double _radius;
         public double Radius { 
             get => _radius; 
             set
