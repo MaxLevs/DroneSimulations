@@ -28,6 +28,17 @@ namespace DroneSimulations.MVVM.ViewModel
 
         public ObservableCollection<DroneViewModel> Drones { get; private set; }
 
+        private DroneViewModel? _selectedDrone;
+        public DroneViewModel? SelectedDrone
+        {
+            get => _selectedDrone;
+            set
+            {
+                _selectedDrone = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -113,12 +124,10 @@ namespace DroneSimulations.MVVM.ViewModel
                     {
                         var viewModel = (DroneViewModel?)args;
 
-                        // [TODO] Execute method selecting
 
                         if (viewModel != null)
                         {
-                            var message = $"Выбран дрон с именем {viewModel.Name}";
-                            MessageBox.Show(message, "Кто-то тыкнул в дрона", MessageBoxButton.OK, MessageBoxImage.Information);
+                            SelectedDrone = viewModel;
                         }
 
                         else

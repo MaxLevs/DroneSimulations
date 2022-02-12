@@ -136,6 +136,7 @@
                                 <ListView Name="ListOfDrones"
                                           Margin="5,0,5,5"
                                           Height="100px"
+                                          SelectedItem="{Binding SelectedDrone, Mode=TwoWay}"
                                           ItemTemplate="{StaticResource DroneListItemTemplate}"
                                           ItemsSource="{Binding Drones}"/>
                             </StackPanel>
