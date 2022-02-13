@@ -35,6 +35,23 @@
 
             <!-- #region Элементы координатной сетки -->
             <Canvas x:Name="CoordinateGridElements">
+                <Canvas.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="-1">
+                        <ScaleTransform.CenterX>
+                            <Binding Path="ActualWidth"
+                                     RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                     Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                     ConverterParameter="0,5"/>
+                        </ScaleTransform.CenterX>
+                        <ScaleTransform.CenterY>
+                            <Binding Path="ActualHeight"
+                                     RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
+                                     Converter="{StaticResource View.Converters.MutiplyByConst}"
+                                     ConverterParameter="0,5"/>
+                        </ScaleTransform.CenterY>
+                    </ScaleTransform>
+                </Canvas.RenderTransform>
+
                 <Line X1="{Binding ActualWidth, ElementName=uc, Converter={StaticResource View.Converters.MutiplyByConst}, ConverterParameter=0.5}"
                       Y1="0"
                       X2="{Binding X1, RelativeSource={RelativeSource Self}}"
@@ -46,6 +63,7 @@
                       X2="{Binding ActualWidth, ElementName=uc}"
                       Y2="{Binding Y1, RelativeSource={RelativeSource Self}}"
                       Stroke="Black"
+                      StrokeDashCap="Round"
                       StrokeThickness="1.5"/>
             </Canvas>
             <!-- #endregion -->
