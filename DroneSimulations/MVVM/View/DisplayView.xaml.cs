@@ -94,8 +94,8 @@ namespace DroneSimulations.MVVM.View
 
         public void AreaPropertyChanged(object? sender, EventArgs e)
         {
-            const double baseDrawShift = 50.0;
-            const double minDrawShift = 25.0;
+            const double baseDrawShift = 100.0;
+            const double minDrawShift = 50.0;
 
             const double mainAxisThickness = 2;
 
@@ -107,7 +107,7 @@ namespace DroneSimulations.MVVM.View
 
             var width = CoordinateGridElements.ActualWidth;
             var height = CoordinateGridElements.ActualHeight;
-            var relatedDrawShift = (baseDrawShift * Scale); // % (baseDrawShift - minDrawShift) + minDrawShift; // Цикличность зума
+            var relatedDrawShift = (baseDrawShift * Scale) % (baseDrawShift - minDrawShift) + minDrawShift; // Цикличность зума
             var expandedArea = 2 * relatedDrawShift;
 
             var centerX = width / 2;
