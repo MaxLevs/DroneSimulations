@@ -134,7 +134,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type viewmodels:DroneViewModel}">
-                        <local:DroneView X="{Binding X}" Y="{Binding Y}"
+                        <local:DroneView CoursePoints="{Binding CoursePoints}"
                                          Radius="{Binding Radius}"
                                          Color="{Binding DisplayColor}"
                                          SelectCommand="{Binding SelectItemCommand, Mode=TwoWay}"
@@ -242,7 +242,7 @@
                                  RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
                                  Converter="{StaticResource View.Converters.MutiplyByConst}"
                                  ConverterParameter="0,5"/>
-                        <Binding Path="X"/>
+                        <Binding Path="CoursePoints[0].X" FallbackValue="0"/>
                     </MultiBinding>
                 </Setter.Value>
             </Setter>
@@ -255,7 +255,7 @@
                                  RelativeSource="{RelativeSource AncestorType=local:DisplayView}"
                                  Converter="{StaticResource View.Converters.MutiplyByConst}"
                                  ConverterParameter="0,5"/>
-                        <Binding Path="Y"/>
+                        <Binding Path="CoursePoints[0].Y" FallbackValue="0"/>
                     </MultiBinding>
                 </Setter.Value>
             </Setter>

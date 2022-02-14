@@ -1,6 +1,7 @@
 ﻿using DroneSimulations.Common;
 using DroneSimulations.MVVM.View;
 using System;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -20,33 +21,35 @@ namespace DroneSimulations.MVVM.ViewModel
 
         public DroneViewModel CreateDefault()
         {
-            int id = nextId++;
-            string name = $"Drone-{id}";
+            int number = nextId++;
+            string name = $"Drone-{number}";
             Color color = _colorFactory.GetRandomColor();
 
             var viewModel = new DroneViewModel
             {
-                Id = id,
-                X = Random.Shared.Next(-300, 300),
-                Y = Random.Shared.Next(-150, 150),
+                Id = Guid.NewGuid(),
                 Name = name,
                 DisplayColor = color,
                 Radius = DefaultRadius,
                 StrategyType = DroneStrategyEnum.Stupid,
             };
 
+            var startPoint = viewModel.CoursePoints.First();
+            startPoint.X = Random.Shared.Next(-300, 300);
+            startPoint.Y = Random.Shared.Next(-150, 150);
+
             return viewModel;
         }
 
         public DroneViewModel CreateWithStrategy(DroneStrategyEnum strategy)
         {
-            int id = nextId++;
-            string name = $"Drone-{id}";
+            int number = nextId++;
+            string name = $"Drone-{number}";
             Color color = _colorFactory.GetRandomColor();
 
             return new DroneViewModel
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 Name = name,
                 DisplayColor = color,
                 Radius = DefaultRadius,

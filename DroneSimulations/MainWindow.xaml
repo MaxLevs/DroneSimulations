@@ -194,8 +194,9 @@
                                     </DockPanel>
                                 </DockPanel>
 
-                                <GroupBox Header="Starting point"
-                                          Margin="0,7,0,0">
+                                <GroupBox Header="Point properties"
+                                          Margin="0,7,0,0"
+                                          DataContext="{Binding SelectedItem, ElementName=ListOfPoints}">
                                     <StackPanel>
                                         <DockPanel VerticalAlignment="Center">
                                             <Label Content="X:"
@@ -216,8 +217,32 @@
                                                      InputScope="Number"
                                                      Text="{Binding Y, Mode=TwoWay}"/>
                                         </DockPanel>
+                                        <DockPanel VerticalAlignment="Center"
+                                                   Margin="0,5,0,0">
+                                            <Label Content="Speed:"
+                                                   Width="50px"
+                                                   Margin="0,0,5,0"/>
+                                            <TextBox VerticalAlignment="Center"
+                                                     TextWrapping="NoWrap"
+                                                     InputScope="Number"
+                                                     Text="{Binding StartSpeed, Mode=TwoWay}"/>
+                                        </DockPanel>
                                     </StackPanel>
                                 </GroupBox>
+
+                                <ListView Height="100"
+                                          ItemsSource="{Binding CoursePoints}"
+                                          x:Name="ListOfPoints">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Content="{Binding X}"/>
+                                                <Label Content="{Binding Y}"/>
+                                                <Label Content="{Binding StartSpeed}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </StackPanel>
                         </Grid>
                     </Grid>

@@ -1,9 +1,13 @@
 ﻿using DroneSimulations.MVVM.View.Converters;
+using System.Collections;
+using System.Linq;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using DroneSimulations.MVVM.ViewModel;
 
 namespace DroneSimulations.MVVM.View
 {
@@ -12,32 +16,33 @@ namespace DroneSimulations.MVVM.View
     /// </summary>
     public partial class DroneView : UserControl
     {
-        public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached(nameof(X), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
+        public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached("X", typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
         {
             AffectsMeasure = true,
             AffectsRender = true,
             SubPropertiesDoNotAffectRender = false,
             DefaultValue = 0.0
         });
-        public double X
-        {
-            get => (double)GetValue(XProperty);
-            set => SetValue(XProperty, value);
-        }
 
-        public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached(nameof(Y), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
+        public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
         {
             AffectsMeasure = true,
             AffectsRender = true,
             SubPropertiesDoNotAffectRender = false,
             DefaultValue = 0.0
         });
-        public double Y
-        {
-            get => (double)GetValue(YProperty);
-            set => SetValue(YProperty, value);
-        }
 
+        public static readonly DependencyProperty CoursePointsProperty = DependencyProperty.RegisterAttached(nameof(CoursePoints), typeof(IList), typeof(DroneView), new FrameworkPropertyMetadata
+        {
+            AffectsMeasure = true,
+            AffectsRender = true,
+            SubPropertiesDoNotAffectRender = false,
+        });
+        public IList CoursePoints
+        {
+            get => (IList)GetValue(CoursePointsProperty);
+            set => SetValue(CoursePointsProperty, value);
+        }
 
         public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register(nameof(Radius), typeof(double), typeof(DroneView), new FrameworkPropertyMetadata
         {
@@ -74,6 +79,14 @@ namespace DroneSimulations.MVVM.View
         public DroneView()
         {
             InitializeComponent();
+
+            DependencyPropertyDescriptor.FromProperty(CoursePointsProperty, typeof(DroneView))
+                                        .AddValueChanged(this, (sender, e) =>
+            {
+                var value = ((IList)GetValue(CoursePointsProperty)).Cast<CoursePoint>().FirstOrDefault();
+                SetValue(XProperty, value?.X ?? 0);
+                SetValue(YProperty, value?.Y ?? 0);
+            });
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using DroneSimulations.Common;
 using DroneSimulations.MVVM.View;
+using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +15,9 @@ namespace DroneSimulations.MVVM.ViewModel
 
     public class DroneViewModel : NotifiableObject
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        #region Properties
 
         private string? _name;
         public string? Name
@@ -69,25 +73,12 @@ namespace DroneSimulations.MVVM.ViewModel
             }
         }
 
-        public double X
-        {
-            get => Points[0].X;
-            set {
-                Points[0] = new Point(value, Points[0].Y);
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<CoursePoint> CoursePoints { get; set; }
 
-        public double Y
-        {
-            get => Points[0].Y;
-            set {
-                Points[0] = new Point(Points[0].X, value);
-                OnPropertyChanged();
-            }
-        }
 
-        public PointCollection Points { get; set; }
+        #endregion
+
+        #region Commands
 
         private ICommand? selectItemCommand;
         public ICommand? SelectItemCommand
@@ -100,14 +91,58 @@ namespace DroneSimulations.MVVM.ViewModel
             }
         }
 
+        #endregion
+
         public DroneViewModel() : base()
         {
             _radius = 0;
             _state = DroneStateEnum.Normal;
-            Points = new PointCollection()
+            CoursePoints = new ObservableCollection<CoursePoint>
             {
-                new Point(0, 0)
+                new CoursePoint
+                {
+                    X = default,
+                    Y = default,
+                    StartSpeed = default,
+                }
             };
+        }
+    }
+
+    /// <summary>
+    /// Представляет точку маршрута и её параметры
+    /// </summary>
+    public class CoursePoint : NotifiableObject
+    {
+        private double _x;
+        public double X
+        {
+            get => _x;
+            set {
+                _x = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _y;
+        public double Y
+        {
+            get => _y;
+            set {
+                _y = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double _startSpeed;
+        public double StartSpeed
+        {
+            get => _startSpeed;
+            set
+            {
+                _startSpeed = value;
+                OnPropertyChanged();
+            }
         }
     }
 }
